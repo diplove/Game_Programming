@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ass1 {
-    class SelectionCube : BasicModel {
+    /// <summary>
+    /// Class to show the player where they are about to build
+    /// on the map. Inherits from the BasicModel class
+    /// </summary>
+    public class SelectionCube : BasicModel {
 
         /// <summary>
         /// Constructor method for the selection cube sub class
@@ -25,7 +30,7 @@ namespace ass1 {
         /// <param name="newPosition"></param>
         public void ChangeSelectionPosition(Vector3 newPosition) {
             position = newPosition;
-            Debug.WriteLine("Cube position is now: X: " + position.X + " Y: " + position.Y + " Z: " + position.Z);
+            
         }
 
         /// <summary>

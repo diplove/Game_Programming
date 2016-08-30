@@ -8,20 +8,20 @@ namespace ass1 {
     /// </summary>
     public class Game1 : Game {
 
-        public static float GLOBAL_SCALE = 10.0f;
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         BasicEffect effect;
         ModelManager modelManager;
+        WorldModelManager worldModelManager;
+
 
         public Camera camera;
 
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
+            graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -37,6 +37,9 @@ namespace ass1 {
 
             modelManager = new ModelManager(this);
             Components.Add(modelManager);
+
+            worldModelManager = new WorldModelManager(this);
+            Components.Add(worldModelManager);
 
             base.Initialize();
         }

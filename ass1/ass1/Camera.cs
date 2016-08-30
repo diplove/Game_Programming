@@ -9,13 +9,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ass1 {
+    /// <summary>
+    /// An implementation of a basic camera for the game
+    /// </summary>
     public class Camera : GameComponent {
 
+        /// <summary>
+        /// Constants controlling limitations on camera movement
+        /// </summary>
         private static float SCROLL_SPEED = 10.0f;
-        private static float MAX_ZOOM = 300.0f;
-        private static float MIN_ZOOM = 150.0f;
+        private static float MAX_ZOOM = 600.0f;
+        private static float MIN_ZOOM = 200.0f;
 
-        //Camera Matrices
+        /// <summary>
+        /// View and Projection matrices for the camera
+        /// </summary>
         public Matrix view { get; protected set; }
         public Matrix projection { get; protected set; }
 
@@ -72,7 +80,9 @@ namespace ass1 {
             base.Initialize();
         }
 
-        //Will reconstruct the view matrix according the cameraPosition, cameraDirection and the cameraUp attributes
+        /// <summary>
+        /// Method to create the lookat matrix based on the camera position, direction and up vectors
+        /// </summary>
         public void CreateLookAt() {
             view = Matrix.CreateLookAt(cameraPosition, cameraPosition + cameraDirection, cameraUp);
         }

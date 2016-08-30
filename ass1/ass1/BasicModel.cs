@@ -7,7 +7,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ass1 {
-    class BasicModel {
+    /// <summary>
+    /// The basic class for a model
+    /// Contains methods to draw and load in a model
+    /// </summary>
+    public class BasicModel {
 
         public Model model { get; protected set; }
         protected Matrix world = Matrix.Identity;
@@ -25,7 +29,7 @@ namespace ass1 {
         /// <summary>
         /// Update method to be overriden by classes that derive BasicModel
         /// </summary>
-        public virtual void Update() {
+        public virtual void Update(GameTime gameTime) {
 
         }
 
@@ -55,8 +59,8 @@ namespace ass1 {
         /// </summary>
         /// <returns>worldMatrix</returns>
         public virtual Matrix GetWorldMatrix() {
-
-            world = Matrix.CreateScale(Game1.GLOBAL_SCALE) * Matrix.CreateTranslation(position);
+            Matrix world;
+            world = Matrix.CreateTranslation(position);
 
             return world;
         }
