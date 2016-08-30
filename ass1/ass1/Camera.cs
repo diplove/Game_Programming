@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ass1 {
-    class Camera : Microsoft.Xna.Framework.GameComponent {
+    public class Camera : GameComponent {
 
         private static float SCROLL_SPEED = 10.0f;
         private static float MAX_ZOOM = 300.0f;
@@ -28,9 +28,6 @@ namespace ass1 {
         float speed;
         float zoomInterval;
 
-
-        private Ground ground;
-
         private int nearPlane;
         private int farPlane;
 
@@ -44,13 +41,11 @@ namespace ass1 {
         /// <param name="pos">The position of the camera</param>
         /// <param name="target">The target that the camera will face</param>
         /// <param name="up">The cameras up vector</param>
-        /// <param name="ground">A reference to the ground plane of the game</param>
-        public Camera(Game game, Vector3 pos, Vector3 target, Vector3 up, Ground ground) : base(game) {
+        public Camera(Game game, Vector3 pos, Vector3 target, Vector3 up) : base(game) {
             //Build the camera view matrix
             cameraPosition = pos;
             cameraDirection = target - pos;
 
-            this.ground = ground;
             //Normalize method takes any vector and converts it to a vector with a magnitude of 1
             //Makes it easier to apply speed values when moving the camera in the direction it is facing
             cameraDirection.Normalize();

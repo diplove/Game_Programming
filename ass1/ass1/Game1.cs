@@ -7,12 +7,15 @@ namespace ass1 {
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game {
+
+        public static int NUM_SQUARES = 100;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         BasicEffect effect;
+        ModelManager modelManager;
 
-        Camera camera;
-        Ground ground;
+        public Camera camera;
 
 
         public Game1() {
@@ -28,11 +31,11 @@ namespace ass1 {
         /// </summary>
         protected override void Initialize() {
 
-            //Create the ground using the circuit board texture
-            ground = new Ground(400, new Vector3(0, -15, 0), Content.Load<Texture2D>(@"Textures\grassTexture"), GraphicsDevice);
-
-            camera = new Camera(this, new Vector3(0, 200, 75), Vector3.Zero, Vector3.Up, ground);
+            camera = new Camera(this, new Vector3(0, 200, 75), Vector3.Zero, Vector3.Up);
             Components.Add(camera);
+
+            modelManager = new ModelManager(this);
+            Components.Add(modelManager);
 
             base.Initialize();
         }
@@ -80,21 +83,6 @@ namespace ass1 {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            GraphicsDevice.SetVertexBuffer(ground.vertBuffer);
-
-            // TODO: Add your drawing code here
-            effect.World = Matrix.Identity;
-            effect.View = camera.view;
-            effect.Projection = camera.projection;
-            effect.Texture = ground.floorTexture;
-            effect.TextureEnabled = true;
-
-            foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
-                pass.Apply();
-
-                GraphicsDevice.DrawUserPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, 
-                    ground.verts, 0, ground.NUM_VERTICES / 3);
-            }
 
             base.Draw(gameTime);
         }
