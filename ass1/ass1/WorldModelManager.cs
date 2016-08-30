@@ -22,7 +22,7 @@ namespace ass1 {
 
         protected override void LoadContent() {
 
-            ground = new Ground(Game.Content.Load<Model>(@"GroundModels\grassSquare"), new Vector3(0, 0, 0));
+            ground = new Ground(Game.Content.Load<Model>(@"GroundModels\ground"), new Vector3(0, 0, 0));
             models.Add(ground);
             selectionCube = new SelectionCube(Game.Content.Load<Model>(@"Models\selectionCube"), new Vector3(0, 0, 0));
             models.Add(selectionCube);
