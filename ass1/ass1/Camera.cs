@@ -111,15 +111,6 @@ namespace ass1 {
                     cameraPosition = new Vector3(cameraPosition.X, cameraPosition.Y - zoomInterval, cameraPosition.Z);
                 }
             }
-            /*
-            //Yaw Rotation i.e. changing cameraDirectionVector
-            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(cameraUp, (-MathHelper.PiOver4 / 360) *
-                (Mouse.GetState().X - prevMouseState.X)));
-            */
-            //Reset the mouse back to the center so that it does not eventually end up off the game screen
-            if (Game.IsActive) {
-                Mouse.SetPosition(Game.Window.ClientBounds.Width / 2, Game.Window.ClientBounds.Height / 2);
-            }
 
             prevMouseState = Mouse.GetState();
 

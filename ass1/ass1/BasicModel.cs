@@ -11,7 +11,7 @@ namespace ass1 {
 
         public Model model { get; protected set; }
         protected Matrix world = Matrix.Identity;
-        Vector3 position;
+        protected Vector3 position;
 
         /// <summary>
         /// Constructor method for the basic model class that takes a model
@@ -36,13 +36,14 @@ namespace ass1 {
         public void Draw(Camera camera) {
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
+            Matrix worldMatrix = GetWorldMatrix();
 
             foreach (ModelMesh mesh in model.Meshes) {
                 foreach (BasicEffect effect in mesh.Effects) {
                     effect.EnableDefaultLighting();
                     effect.Projection = camera.projection;
                     effect.View = camera.view;
-                    effect.World = GetWorldMatrix() * mesh.ParentBone.Transform;
+                    effect.World = worldMatrix * mesh.ParentBone.Transform;
                 }
                 mesh.Draw();
             }
@@ -55,7 +56,7 @@ namespace ass1 {
         /// <returns>worldMatrix</returns>
         public virtual Matrix GetWorldMatrix() {
 
-            world = Matrix.CreateTranslation(position);
+            world = Matrix.CreateScale(Game1.GLOBAL_SCALE) * Matrix.CreateTranslation(position);
 
             return world;
         }

@@ -9,16 +9,18 @@ using System.Threading.Tasks;
 namespace ass1 {
     class Ground : BasicModel {
 
-        private static float SCALE = 100.0f;
+        public static float SCALE = 40.0f;
+
+        public Plane groundPlane;
 
         public Ground(Model m, Vector3 position) : base(m, position){
-
+            groundPlane = new Plane(Vector3.UnitY, position.Y);
         }
 
         public override Matrix GetWorldMatrix() {
             Matrix world;
             world = base.GetWorldMatrix();
-            world = Matrix.CreateScale(SCALE);
+            world = Matrix.CreateScale(SCALE * Game1.GLOBAL_SCALE);
             return world;
         }
     }

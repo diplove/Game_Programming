@@ -8,7 +8,7 @@ namespace ass1 {
     /// </summary>
     public class Game1 : Game {
 
-        public static int NUM_SQUARES = 100;
+        public static float GLOBAL_SCALE = 10.0f;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -21,6 +21,7 @@ namespace ass1 {
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -72,6 +73,8 @@ namespace ass1 {
                 Exit();
 
             // TODO: Add your update logic here
+
+            
 
             base.Update(gameTime);
         }
