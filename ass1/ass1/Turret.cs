@@ -17,6 +17,7 @@ namespace ass1 {
         protected int health;
         protected int fireRate;
         protected int damage;
+        public int cost;
         protected Model bullet;
         protected String name;
         protected String description;
@@ -31,7 +32,8 @@ namespace ass1 {
         /// <param name="bullet"></param>
         public Turret(Model m, Vector3 position, Model bullet) : base(m, position) {
             this.bullet = bullet;
-            Debug.WriteLine("Turret created at X: " + position.X + " Y: " + position.Y + " Z: " + position.Z);
+            //Debug.WriteLine("Turret created at X: " + position.X + " Y: " + position.Y + " Z: " + position.Z);
+            Initiate();
         }
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace ass1 {
             health = 100;
             fireRate = 1;
             damage = 10;
+            cost = 100;
             name = "Basic Turret";
             description = "The default turret - USED FOR TESTING";
         }

@@ -17,7 +17,7 @@ namespace ass1 {
         /// <summary>
         /// Stores a list of all the models in the scene
         /// </summary>
-        protected List<BasicModel> models = new List<BasicModel>();
+        public List<BasicModel> models = new List<BasicModel>();
 
         public ModelManager(Game game) : base(game) {
 
