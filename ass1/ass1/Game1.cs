@@ -24,7 +24,7 @@ namespace ass1 {
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
-            graphics.ToggleFullScreen();
+            //graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
         }
 
@@ -107,7 +107,7 @@ namespace ass1 {
                 //Debug.WriteLine("Cube position is now: X: " + pickedPosition.X + " Y: " + -pickedPosition.Z + " Z: " + pickedPosition.Y);
                 //CREATION OF THE TURRET ON CLICK
                 if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released) {
-                    Turret turret = new Turret(Content.Load<Model>(@"Models\Turrets\turretStock"), new Vector3(pickedPosition.X, -pickedPosition.Z, pickedPosition.Y), null);
+                    Turret turret = new Turret(Content.Load<Model>(@"Models\Turrets\cannon"), new Vector3(pickedPosition.X, -pickedPosition.Z, pickedPosition.Y), null);
                     if (player.HasSuffucientMoney(turret.cost)) {
                         worldModelManager.CreateTurret(turret);
                         player.SpendMoney(turret.cost);
