@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="BasicModel.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Tower.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Ground.cs" />
     <Compile Include="ModelManager.cs" />
@@ -63,7 +64,6 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
