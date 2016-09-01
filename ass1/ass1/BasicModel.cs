@@ -65,5 +65,18 @@ namespace ass1 {
             return world;
         }
 
+        public bool CollidesWith(Model otherModel, Matrix otherWorld) {
+            //Loop through each model meash in both objects and compare all the bounding spheres
+            //for collisions
+            foreach (ModelMesh thisModelMeshes in model.Meshes) {
+                foreach(ModelMesh otherModelMeshes in otherModel.Meshes) {
+                    if (thisModelMeshes.BoundingSphere.Transform(GetWorldMatrix()).Intersects(otherModelMeshes.BoundingSphere.Transform(otherWorld))) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
     }
 }

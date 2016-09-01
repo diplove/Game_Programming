@@ -12,11 +12,13 @@ namespace ass1 {
         int health;
         Tower tower;
         float speed;
+        int damage;
 
         public Enemy(Model m, Vector3 position, Tower tower) : base(m, position) {
             this.tower = tower;
             this.health = 100;
-            this.speed = 10.0f;
+            this.speed = 50.0f;
+            this.damage = 10;
         }
 
         public virtual void Initiate() {
@@ -30,6 +32,10 @@ namespace ass1 {
         public override void Update(GameTime gameTime) {
             position = Behavior.ChaseLocation(this.position, tower.GetPosition(), gameTime, this.speed);
             base.Update(gameTime);
+        }
+
+        public int GetDamage() {
+            return this.damage;
         }
 
     }

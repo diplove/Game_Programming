@@ -10,7 +10,6 @@ namespace ass1 {
     class Player {
 
         public static int STARTING_MONEY = 1000;
-        SpriteFont font;
 
         public int money;
         Game1 game;
@@ -18,7 +17,6 @@ namespace ass1 {
         public Player(Game1 game) {
             money = STARTING_MONEY;
             this.game = game;
-            font = game.Content.Load<SpriteFont>(@"Fonts\playerInfoFont");
         }
 
         /// <summary>
@@ -43,8 +41,8 @@ namespace ass1 {
             return "You have insufficient money for your purchase";
         }
 
-        public void DrawText(SpriteBatch spriteBatch) {
-            spriteBatch.DrawString(font, "Money : $" + money, new Vector2(0, 0), Color.Black);
+        public void DrawText(SpriteBatch spriteBatch, SpriteFont font) {
+            spriteBatch.DrawString(font, "Money : $" + money, new Vector2(20, 20), Color.Black);
         }
 
     }

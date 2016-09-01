@@ -15,13 +15,16 @@ namespace ass1 {
         public SelectionCube selectionCube;
         public Tower tower;
 
+        Game1 game;
+
         MouseState prevMouseState;
 
         public List<Enemy> enemies = new List<Enemy>();
         Random rand = new Random();
 
-        public WorldModelManager(Game game) : base(game) {
+        public WorldModelManager(Game1 game) : base(game) {
             prevMouseState = Mouse.GetState();
+            this.game = game;
         }
 
         protected override void LoadContent() {
@@ -30,16 +33,28 @@ namespace ass1 {
             models.Add(ground);
             selectionCube = new SelectionCube(Game.Content.Load<Model>(@"Models\selectionCube"), new Vector3(0, 0, 0));
             models.Add(selectionCube);
-            tower = new Tower(Game.Content.Load<Model>(@"Models\selectionCube"), new Vector3(0, 300, 0));
+            tower = new Tower(Game.Content.Load<Model>(@"Models\selectionCube"), new Vector3(0, 300, 0), game);
             models.Add(tower);
             CreateEnemy();
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime) {
+            List<Enemy> toBeKilled = new List<Enemy>();
             foreach(Enemy enemy in enemies) {
                 enemy.Update(gameTime);
+                //If an enemy collides with the tower, the tower takes damage and the enemy is destroyed
+                if (enemy.CollidesWith(tower.model, tower.GetWorldMatrix())) {
+                    tower.DamageTower(enemy.GetDamage());
+                    toBeKilled.Add(enemy);
+                }
             }
+            //Kill all enemies that need to be killed
+            foreach (Enemy enemy in toBeKilled) {
+                enemies.Remove(enemy);
+                models.Remove(enemy);
+            }
+
             base.Update(gameTime);
         }
 

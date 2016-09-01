@@ -10,6 +10,9 @@ namespace ass1 {
     /// </summary>
     public class Game1 : Game {
 
+        public int SCREEN_WIDTH;
+        public int SCREEN_HEIGHT; 
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         BasicEffect effect;
@@ -19,15 +22,20 @@ namespace ass1 {
 
         MouseState prevMouseState;
 
+        SpriteFont informationFont;
+
         Random rand = new Random();
 
         public Camera camera;
+
+        bool gameOver;
 
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             //graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
+            gameOver = false;
         }
 
         /// <summary>
@@ -48,6 +56,7 @@ namespace ass1 {
 
             prevMouseState = Mouse.GetState();
 
+
             base.Initialize();
         }
 
@@ -61,6 +70,12 @@ namespace ass1 {
 
             effect = new BasicEffect(GraphicsDevice);
 
+            informationFont = Content.Load<SpriteFont>(@"Fonts\playerInfoFont");
+
+            SCREEN_HEIGHT = Window.ClientBounds.Height;
+            SCREEN_WIDTH = Window.ClientBounds.Width;
+
+            Debug.WriteLine("Screen height = " + SCREEN_HEIGHT + " Screen width = " + SCREEN_WIDTH);
             // TODO: use this.Content to load your game content here
         }
 
@@ -141,8 +156,16 @@ namespace ass1 {
             base.Draw(gameTime);
 
             spriteBatch.Begin();
-            player.DrawText(spriteBatch);
+            player.DrawText(spriteBatch, informationFont);
+            worldModelManager.tower.DrawText(spriteBatch, informationFont);
+            if (gameOver) {
+                spriteBatch.DrawString(informationFont, "THE TOWER HAS BEEN DESTROYED", new Vector2(SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2), Color.Black);
+            }
             spriteBatch.End();
+        }
+
+        public void GameOver() {
+            gameOver = true;
         }
 
     }
