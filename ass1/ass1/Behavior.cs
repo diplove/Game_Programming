@@ -47,5 +47,20 @@ namespace ass1 {
             return newPosition;
         }
 
+        /// <summary>
+        /// A static method that takes a current position and returns a new position based on the
+        /// target destination. This particular method will find the next spot in a straight line
+        /// path to the destination
+        /// </summary>
+        /// <param name="currentPosition">The current position of the agent</param>
+        /// <param name="targetPosition">The target position for the agent to head towards</param>
+        /// <param name="gameTime">The current game time</param>
+        /// <param name="speed">The speed that the agent will move at</param>
+        /// <returns></returns>
+        public static Vector3 StraightLineChase(Vector3 currentPosition, Vector3 targetPosition, GameTime gameTime, float speed) {
+
+            return new Vector3();
+        }
+
     }
 }

@@ -124,14 +124,13 @@ namespace ass1 {
                 //Debug.WriteLine("Cube position is now: X: " + pickedPosition.X + " Y: " + -pickedPosition.Z + " Z: " + pickedPosition.Y);
                 //CREATION OF THE TURRET ON CLICK
                 if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released) {
-                    Turret turret = new Turret(Content.Load<Model>(@"Models\Turrets\cannon"), new Vector3(pickedPosition.X, -pickedPosition.Z, pickedPosition.Y), null);
-                    if (player.HasSuffucientMoney(turret.cost)) {
-                        worldModelManager.CreateTurret(turret);
-                        player.SpendMoney(turret.cost);
-                        Debug.WriteLine("Player has: " + player.money);
+                    if (player.HasSuffucientMoney(Turret.COST)) {
+                        worldModelManager.CreateTurret(new Vector3(pickedPosition.X, -pickedPosition.Z, pickedPosition.Y));
+                        player.SpendMoney(Turret.COST);
                     } else {
-                        
+                        //Player does not have enough money for turret
                     }
+                    
                 }
 
             }

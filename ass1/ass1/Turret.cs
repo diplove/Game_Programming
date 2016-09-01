@@ -14,13 +14,22 @@ namespace ass1 {
     /// </summary>
     class Turret : BasicModel {
 
+        public static int COST = 100;
+
+        public ModelManager bullets;
+
         protected int health;
-        protected int fireRate;
-        protected int damage;
-        public int cost;
+
+        //Number of shots per second
+        protected float fireRate;
         protected Model bullet;
         protected String name;
         protected String description;
+
+        private WorldModelManager worldModelManager;
+
+        //How many miliseconds since last fire
+        private int lastFired;
 
         /// <summary>
         /// Constructor method that passes the turret model and the position to the
@@ -30,8 +39,11 @@ namespace ass1 {
         /// <param name="m"></param>
         /// <param name="position"></param>
         /// <param name="bullet"></param>
-        public Turret(Model m, Vector3 position, Model bullet) : base(m, position) {
+        public Turret(Model m, Vector3 position, Model bullet, WorldModelManager worldModelManager) : base(m, position) {
             this.bullet = bullet;
+            this.worldModelManager = worldModelManager;
+            bullets = new ModelManager(worldModelManager.Game);
+            lastFired = 0;
             //Debug.WriteLine("Turret created at X: " + position.X + " Y: " + position.Y + " Z: " + position.Z);
             Initiate();
         }
@@ -42,12 +54,35 @@ namespace ass1 {
         /// </summary>
         protected virtual void Initiate() {
             health = 100;
-            fireRate = 1;
-            damage = 10;
-            cost = 100;
+            fireRate = 1.0f;
             name = "Basic Turret";
             description = "The default turret - USED FOR TESTING";
         }
+
+        public override void Update(GameTime gameTime) {
+            
+            foreach(Bullet bullet in bullets.models) {
+                bullet.Update(gameTime);
+            }
+
+            if (lastFired > fireRate * 1000.0f) {
+                if (worldModelManager.enemies.models.Count <= 0) {
+
+                } else {
+                    bullets.models.Add(new Bullet(bullet, this.position, (Enemy)worldModelManager.enemies.models.ElementAt(0)));
+                    Debug.WriteLine("CANNON IS FIRING");
+                    lastFired = 0;
+                }
+                
+            } else {
+                Debug.WriteLine("Last Fired = " + lastFired);
+                lastFired += gameTime.ElapsedGameTime.Milliseconds;
+            }
+
+            base.Update(gameTime);
+        }
+
+
 
         public override Matrix GetWorldMatrix() {
             world = base.GetWorldMatrix() ;

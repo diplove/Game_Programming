@@ -37,7 +37,7 @@ namespace ass1 {
         /// Basic draw method for a generic model object
         /// </summary>
         /// <param name="camera"></param>
-        public void Draw(Camera camera) {
+        public virtual void Draw(Camera camera) {
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
             Matrix worldMatrix = GetWorldMatrix();
@@ -61,7 +61,6 @@ namespace ass1 {
         public virtual Matrix GetWorldMatrix() {
             Matrix world;
             world = Matrix.CreateTranslation(position);
-
             return world;
         }
 
@@ -76,6 +75,10 @@ namespace ass1 {
                 }
             }
             return false;
+        }
+
+        public Vector3 GetPosition() {
+            return this.position;
         }
 
     }

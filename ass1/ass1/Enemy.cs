@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ass1 {
     public class Enemy : BasicModel {
 
-        int health;
+        public int health { get; protected set; }
         Tower tower;
         float speed;
         int damage;
@@ -36,6 +36,10 @@ namespace ass1 {
 
         public int GetDamage() {
             return this.damage;
+        }
+
+        public void DamageEnemy(int damage) {
+            health -= damage;
         }
 
     }
