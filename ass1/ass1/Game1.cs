@@ -156,11 +156,21 @@ namespace ass1 {
             base.Draw(gameTime);
 
             spriteBatch.Begin();
+
+            //Current round timer on screen
+            spriteBatch.DrawString(informationFont, "Time: " + gameTime.TotalGameTime.Seconds, new Vector2(SCREEN_WIDTH - 100, 20), Color.Black);
+
+            //Player and Tower information on screen
             player.DrawText(spriteBatch, informationFont);
             worldModelManager.tower.DrawText(spriteBatch, informationFont);
+
+            //Message displayed when game is over
             if (gameOver) {
                 spriteBatch.DrawString(informationFont, "THE TOWER HAS BEEN DESTROYED", new Vector2(SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2), Color.Black);
             }
+
+
+
             spriteBatch.End();
         }
 
