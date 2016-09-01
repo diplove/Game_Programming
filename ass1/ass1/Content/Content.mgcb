@@ -101,3 +101,9 @@
 /processorParam:TextureFormat=DxtCompressed
 /build:Models/Turrets/cannon.fbx
 
+#begin Fonts\playerInfoFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts\playerInfoFont.spritefont
+

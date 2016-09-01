@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ass1
 {
-    class Tower : BasicModel 
+    public class Tower : BasicModel 
     {
         protected int damage;
         protected String name;
@@ -63,6 +63,10 @@ namespace ass1
         public void IncreaseTowerDamage()
         {
             damage = damage + 1;
+        }
+
+        public Vector3 GetPosition() {
+            return this.position;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Diagnostics;
 
 namespace ass1 {
@@ -18,6 +19,7 @@ namespace ass1 {
 
         MouseState prevMouseState;
 
+        Random rand = new Random();
 
         public Camera camera;
 
@@ -121,6 +123,10 @@ namespace ass1 {
 
             prevMouseState = mouseState;
 
+            //Random enemy creation every frame, 1 in 100 chance of spawing
+            if (rand.Next() % 100  == 0) {
+                worldModelManager.CreateEnemy();
+            }
 
             base.Update(gameTime);
         }
@@ -132,8 +138,11 @@ namespace ass1 {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-
             base.Draw(gameTime);
+
+            spriteBatch.Begin();
+            player.DrawText(spriteBatch);
+            spriteBatch.End();
         }
 
     }
