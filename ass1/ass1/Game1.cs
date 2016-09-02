@@ -176,10 +176,18 @@ namespace ass1 {
             spriteBatch.End();
         }
 
+        /// <summary>
+        /// Sets the game over value to be true. Will be called by another class when a losing
+        /// condition is triggered
+        /// </summary>
         public void GameOver() {
             gameOver = true;
         }
 
+        /// <summary>
+        /// Is called when a player has killed an enemy
+        /// </summary>
+        /// <param name="rewardForKilled"></param>
         public void EnemyKilled(int rewardForKilled) {
             player.GiveMoney(rewardForKilled);
             enemiesKilled++;

@@ -17,6 +17,8 @@ namespace ass1 {
         protected Matrix world = Matrix.Identity;
         protected Vector3 position;
 
+        private Quaternion rotation;
+
         /// <summary>
         /// Constructor method for the basic model class that takes a model
         /// </summary>
@@ -75,6 +77,12 @@ namespace ass1 {
                 }
             }
             return false;
+        }
+
+        public void RotateToFaceTarget(Vector3 targetPosition) {
+            float targetRotation = (float) Math.Atan2(targetPosition.Y, position.Y);
+            //rotation = targetRotation;
+
         }
 
         public Vector3 GetPosition() {

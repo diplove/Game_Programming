@@ -68,8 +68,10 @@ namespace ass1 {
             if (lastFired > fireRate * 1000.0f) {
                 if (worldModelManager.enemies.models.Count <= 0) {
 
+                    //RotateToFaceTarget(worldModelManager.enemies.models.ElementAt(0).GetPosition());
+
                 } else {
-                    bullets.models.Add(new Bullet(bullet, this.position, (Enemy)worldModelManager.enemies.models.ElementAt(0)));
+                    bullets.models.Add(new Bullet(bullet, this.position, worldModelManager.GetClosestEnemy(position)));
                     Debug.WriteLine("CANNON IS FIRING");
                     lastFired = 0;
                 }
