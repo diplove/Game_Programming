@@ -37,6 +37,10 @@ namespace ass1 {
             money -= cost;
         }
 
+        public void GiveMoney(int reward) {
+            money += reward;
+        }
+
         private String InsufficientMoneyMessage() {
             return "You have insufficient money for your purchase";
         }

@@ -18,7 +18,7 @@ namespace ass1 {
 
         public ModelManager bullets;
 
-        protected int health;
+        public int health { get; protected set; }
 
         //Number of shots per second
         protected float fireRate;
@@ -53,7 +53,7 @@ namespace ass1 {
         /// and also the strings for the description and the name
         /// </summary>
         protected virtual void Initiate() {
-            health = 100;
+            health = 10;
             fireRate = 1.0f;
             name = "Basic Turret";
             description = "The default turret - USED FOR TESTING";
@@ -82,7 +82,9 @@ namespace ass1 {
             base.Update(gameTime);
         }
 
-
+        public void DamageTurret(int damage) {
+            health -= damage;
+        }
 
         public override Matrix GetWorldMatrix() {
             world = base.GetWorldMatrix() ;

@@ -44,7 +44,7 @@ namespace ass1 {
 
         public override void Update(GameTime gameTime) {
             List<Enemy> toBeKilled = new List<Enemy>();
-           
+            List<Turret> turretsToBeDestroyed = new List<Turret>();
             foreach(Enemy enemy in enemies.models) {
                 enemy.Update(gameTime);
                 //If an enemy collides with the tower, the tower takes damage and the enemy is destroyed
@@ -52,22 +52,37 @@ namespace ass1 {
                     tower.DamageTower(enemy.GetDamage());
                     toBeKilled.Add(enemy);
                 }
+
+                foreach (Turret turret in turrets.models) {
+                    if (enemy.CollidesWith(turret.model, turret.GetWorldMatrix())) {
+                        turret.DamageTurret(enemy.GetDamage());
+                        toBeKilled.Add(enemy);
+                        if (turret.health <= 0) {
+                            turretsToBeDestroyed.Add(turret);
+                        }
+                    }
+                }
+
             }
+
 
             foreach (Turret turret in turrets.models) {
                 List<Bullet> bulletsToBeDestroyed = new List<Bullet>();
                 turret.Update(gameTime);
                 foreach(Bullet bullet in turret.bullets.models) {
                     foreach(Enemy enemy in enemies.models) {
+                        //When a bullet collides with an enemy
                         if (bullet.CollidesWith(enemy.model, enemy.GetWorldMatrix())) {
                             enemy.DamageEnemy(bullet.damage);
                             bulletsToBeDestroyed.Add(bullet);
                             if (enemy.health < 0) {
                                 toBeKilled.Add(enemy);
+                                game.EnemyKilled(enemy.rewardForKilling);
                             }
                         }
                     }
                 }
+
                 //Remove all bullets that collided this frame
                 foreach (Bullet bullet in bulletsToBeDestroyed) {
                     turret.bullets.models.Remove(bullet);
@@ -78,6 +93,11 @@ namespace ass1 {
             //Kill all enemies that need to be killed
             foreach (Enemy enemy in toBeKilled) {
                 enemies.models.Remove(enemy);
+            }
+
+            //Destroy all turrets that need to be destroyed
+            foreach (Turret turret in turretsToBeDestroyed) {
+                turrets.models.Remove(turret);
             }
 
 

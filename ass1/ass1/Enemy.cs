@@ -10,6 +10,7 @@ namespace ass1 {
     public class Enemy : BasicModel {
 
         public int health { get; protected set; }
+        public int rewardForKilling { get; protected set; }
         Tower tower;
         float speed;
         int damage;
@@ -18,6 +19,7 @@ namespace ass1 {
             this.tower = tower;
             this.health = 100;
             this.speed = 50.0f;
+            this.rewardForKilling = 10;
             this.damage = 10;
         }
 
@@ -30,7 +32,7 @@ namespace ass1 {
         /// </summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
-            position = Behavior.ChaseLocation(this.position, tower.GetPosition(), gameTime, this.speed);
+            position = Behavior.StraightLineChase(this.position, tower.GetPosition(), gameTime, this.speed);
             base.Update(gameTime);
         }
 

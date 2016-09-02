@@ -59,7 +59,10 @@ namespace ass1 {
         /// <returns></returns>
         public static Vector3 StraightLineChase(Vector3 currentPosition, Vector3 targetPosition, GameTime gameTime, float speed) {
 
-            return new Vector3();
+            Vector3 directionOfTravel = Vector3.Normalize(targetPosition - currentPosition);
+            Vector3 newPosition = currentPosition + directionOfTravel * speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
+
+            return newPosition;
         }
 
     }

@@ -26,6 +26,8 @@ namespace ass1 {
 
         Random rand = new Random();
 
+        int enemiesKilled;
+
         public Camera camera;
 
         bool gameOver;
@@ -56,6 +58,7 @@ namespace ass1 {
 
             prevMouseState = Mouse.GetState();
 
+            enemiesKilled = 0;
 
             base.Initialize();
         }
@@ -175,6 +178,11 @@ namespace ass1 {
 
         public void GameOver() {
             gameOver = true;
+        }
+
+        public void EnemyKilled(int rewardForKilled) {
+            player.GiveMoney(rewardForKilled);
+            enemiesKilled++;
         }
 
     }
