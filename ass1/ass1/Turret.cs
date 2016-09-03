@@ -44,6 +44,7 @@ namespace ass1 {
             this.worldModelManager = worldModelManager;
             bullets = new ModelManager(worldModelManager.Game);
             lastFired = 0;
+            rotation = RotateToFace(position, worldModelManager.GetClosestEnemy(position).GetPosition(), new Vector3(0, 0, 1));
             //Debug.WriteLine("Turret created at X: " + position.X + " Y: " + position.Y + " Z: " + position.Z);
             Initiate();
         }
@@ -54,30 +55,36 @@ namespace ass1 {
         /// </summary>
         protected virtual void Initiate() {
             health = 10;
-            fireRate = 1.0f;
+            fireRate = 2.0f;
             name = "Basic Turret";
-            description = "The default turret - USED FOR TESTING";
         }
 
+        /// <summary>
+        /// Determines the positioning of all the bullets related to this turret
+        /// and spawns new bullets depending on its fire rate
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
             
             foreach(Bullet bullet in bullets.models) {
                 bullet.Update(gameTime);
             }
 
+            if (!(worldModelManager.enemies.models.Count <= 0)) {
+                rotation = BasicModel.RotateToFace(position, worldModelManager.GetClosestEnemy(position).GetPosition(),
+                        new Vector3(0, 0, 1));
+            }
+            
+
             if (lastFired > fireRate * 1000.0f) {
                 if (worldModelManager.enemies.models.Count <= 0) {
-
-                    //RotateToFaceTarget(worldModelManager.enemies.models.ElementAt(0).GetPosition());
-
                 } else {
                     bullets.models.Add(new Bullet(bullet, this.position, worldModelManager.GetClosestEnemy(position)));
-                    Debug.WriteLine("CANNON IS FIRING");
+                    
                     lastFired = 0;
                 }
                 
             } else {
-                Debug.WriteLine("Last Fired = " + lastFired);
                 lastFired += gameTime.ElapsedGameTime.Milliseconds;
             }
 

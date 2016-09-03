@@ -33,6 +33,7 @@ namespace ass1 {
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
             position = Behavior.StraightLineChase(this.position, tower.GetPosition(), gameTime, this.speed);
+            rotation = BasicModel.RotateToFace(position, tower.GetPosition(), new Vector3(0, 0, 1));
             base.Update(gameTime);
         }
 

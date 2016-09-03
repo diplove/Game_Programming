@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace ass1 {
     /// <summary>
@@ -17,7 +18,7 @@ namespace ass1 {
         protected Matrix world = Matrix.Identity;
         protected Vector3 position;
 
-        private Quaternion rotation;
+        public Quaternion rotation;
 
         /// <summary>
         /// Constructor method for the basic model class that takes a model
@@ -26,6 +27,7 @@ namespace ass1 {
         public BasicModel(Model m, Vector3 position) {
             model = m;
             this.position = position;
+            this.rotation = new Quaternion();
         }
 
         /// <summary>
@@ -62,7 +64,7 @@ namespace ass1 {
         /// <returns>worldMatrix</returns>
         public virtual Matrix GetWorldMatrix() {
             Matrix world;
-            world = Matrix.CreateTranslation(position);
+            world = Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(position);
             return world;
         }
 
@@ -79,10 +81,21 @@ namespace ass1 {
             return false;
         }
 
-        public void RotateToFaceTarget(Vector3 targetPosition) {
-            float targetRotation = (float) Math.Atan2(targetPosition.Y, position.Y);
-            //rotation = targetRotation;
-
+        // O is your object's position
+        // P is the position of the object to face
+        // U is the nominal "up" vector (typically Vector3.Y)
+        // Note: this does not work when O is straight below or straight above P
+        public static Quaternion RotateToFace(Vector3 objectPosition, Vector3 targetPosition, Vector3 up) {
+            Vector3 direction = (objectPosition - targetPosition);
+            Vector3 relativeRight = Vector3.Cross(up, direction);
+            Vector3.Normalize(ref relativeRight, out relativeRight);
+            Vector3 relativeBackwards = Vector3.Cross(relativeRight, up);
+            Vector3.Normalize(ref relativeBackwards, out relativeBackwards);
+            Vector3 newUp = Vector3.Cross(relativeBackwards, relativeRight);
+            Matrix rot = new Matrix(relativeRight.X, relativeRight.Y, relativeRight.Z, 0, newUp.X, newUp.Y, newUp.Z, 0, relativeBackwards.X, relativeBackwards.Y, relativeBackwards.Z, 0, 0, 0, 0, 1);
+            Quaternion rotation = Quaternion.CreateFromRotationMatrix(rot);
+            Debug.WriteLine("MAKING QUATERNION");
+            return rotation;
         }
 
         public Vector3 GetPosition() {

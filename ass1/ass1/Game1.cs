@@ -11,7 +11,10 @@ namespace ass1 {
     public class Game1 : Game {
 
         public int SCREEN_WIDTH;
-        public int SCREEN_HEIGHT; 
+        public int SCREEN_HEIGHT;
+
+        public static int WORLD_BOUNDS_WIDTH = 1000;
+        public static int WORLD_BOUNDS_HEIGHT = 1000;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -135,6 +138,10 @@ namespace ass1 {
                     }
                     
                 }
+
+                if (mouseState.RightButton == ButtonState.Pressed & prevMouseState.RightButton == ButtonState.Released) {
+                    worldModelManager.CreateWall(new Vector3(pickedPosition.X, -pickedPosition.Z, pickedPosition.Y));
+                } 
 
             }
 
