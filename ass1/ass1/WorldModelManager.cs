@@ -94,10 +94,18 @@ namespace ass1 {
                         if (bullet.CollidesWith(enemy.model, enemy.GetWorldMatrix())) {
                             enemy.DamageEnemy(bullet.damage);
                             bulletsToBeDestroyed.Add(bullet);
-                            if (enemy.health < 0) {
+                            if (enemy.health <= 0) {
                                 toBeKilled.Add(enemy);
                                 game.EnemyKilled(enemy.rewardForKilling);
                             }
+                        //If the bullet is outside the world bounds
+                        } else if (bullet.GetPosition().X > Game1.WORLD_BOUNDS_WIDTH/2 ||
+                            bullet.GetPosition().X < -Game1.WORLD_BOUNDS_WIDTH/2 ||
+                            bullet.GetPosition().Y > Game1.WORLD_BOUNDS_HEIGHT/2 ||
+                            bullet.GetPosition().Y < -Game1.WORLD_BOUNDS_HEIGHT/2) {
+
+                            bulletsToBeDestroyed.Add(bullet);
+
                         }
                     }
                 }
@@ -160,10 +168,14 @@ namespace ass1 {
 
         /// <summary>
         /// Returns the closest enemy to a given position
+        /// Will return NULL if there are no enemies
         /// </summary>
         /// <param name="currentPosition"></param>
-        /// <returns></returns>
+        /// <returns>closestEnemy</returns>
         public Enemy GetClosestEnemy(Vector3 currentPosition) {
+            if (enemies.models.Count == 0) {
+                return null;
+            }
             Enemy closestEnemy = (Enemy) enemies.models.ElementAt(0);
             foreach (Enemy enemy in enemies.models) {
                 //Pythagoras Thereom

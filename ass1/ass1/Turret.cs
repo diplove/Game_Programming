@@ -44,7 +44,11 @@ namespace ass1 {
             this.worldModelManager = worldModelManager;
             bullets = new ModelManager(worldModelManager.Game);
             lastFired = 0;
-            rotation = RotateToFace(position, worldModelManager.GetClosestEnemy(position).GetPosition(), new Vector3(0, 0, 1));
+            Enemy closestEnemy = worldModelManager.GetClosestEnemy(position);
+            if (closestEnemy != null) {
+                rotation = RotateToFace(position, worldModelManager.GetClosestEnemy(position).GetPosition(), new Vector3(0, 0, 1));
+            }
+            
             //Debug.WriteLine("Turret created at X: " + position.X + " Y: " + position.Y + " Z: " + position.Z);
             Initiate();
         }
@@ -76,11 +80,10 @@ namespace ass1 {
             }
             
 
-            if (lastFired > fireRate * 1000.0f) {
+            if (lastFired > fireRate * 1000.0f && worldModelManager.GetClosestEnemy(position) != null) {
                 if (worldModelManager.enemies.models.Count <= 0) {
                 } else {
                     bullets.models.Add(new Bullet(bullet, this.position, worldModelManager.GetClosestEnemy(position)));
-                    
                     lastFired = 0;
                 }
                 
