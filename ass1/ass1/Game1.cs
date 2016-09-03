@@ -13,8 +13,13 @@ namespace ass1 {
         public int SCREEN_WIDTH;
         public int SCREEN_HEIGHT;
 
+        public int waveNumber;
+
         public static int WORLD_BOUNDS_WIDTH = 1000;
         public static int WORLD_BOUNDS_HEIGHT = 1000;
+
+        private int timeMinutes;
+        private int timeSeconds;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -62,6 +67,11 @@ namespace ass1 {
             prevMouseState = Mouse.GetState();
 
             enemiesKilled = 0;
+
+            waveNumber = 1;
+
+            timeMinutes = 0;
+            timeSeconds = 0;
 
             base.Initialize();
         }
@@ -148,9 +158,16 @@ namespace ass1 {
             prevMouseState = mouseState;
 
             //Random enemy creation every frame, 1 in 100 chance of spawing
-            if (rand.Next() % 100  == 0) {
+            if (rand.Next() % 200  < waveNumber) {
                 worldModelManager.CreateEnemy();
             }
+
+            if (!gameOver) {
+                timeMinutes = gameTime.TotalGameTime.Minutes;
+                waveNumber = timeMinutes + 1;
+                timeSeconds = gameTime.TotalGameTime.Seconds;
+            }
+            
 
             base.Update(gameTime);
         }
@@ -166,8 +183,8 @@ namespace ass1 {
 
             spriteBatch.Begin();
 
-            //Current round timer on screen
-            spriteBatch.DrawString(informationFont, "Time: " + gameTime.TotalGameTime.Seconds, new Vector2(SCREEN_WIDTH - 100, 20), Color.Black);
+            
+
 
             //Player and Tower information on screen
             player.DrawText(spriteBatch, informationFont);
@@ -176,9 +193,11 @@ namespace ass1 {
             //Message displayed when game is over
             if (gameOver) {
                 spriteBatch.DrawString(informationFont, "THE TOWER HAS BEEN DESTROYED", new Vector2(SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2), Color.Black);
+                
             }
 
-
+            spriteBatch.DrawString(informationFont, "Time: " + timeMinutes + ":" + timeSeconds, new Vector2(SCREEN_WIDTH - 100, 20), Color.Black);
+            spriteBatch.DrawString(informationFont, "Wave: " + waveNumber, new Vector2(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 20), Color.Black);
 
             spriteBatch.End();
         }

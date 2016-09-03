@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ass1 {
     class Player {
 
-        public static int STARTING_MONEY = 1000;
+        public static int STARTING_MONEY = 300;
 
         public int money;
         Game1 game;
