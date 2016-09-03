@@ -84,6 +84,7 @@ namespace ass1 {
                 if (worldModelManager.enemies.models.Count <= 0) {
                 } else {
                     bullets.models.Add(new Bullet(bullet, this.position, worldModelManager.GetClosestEnemy(position)));
+                    worldModelManager.CannonFire();
                     lastFired = 0;
                 }
                 

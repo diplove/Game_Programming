@@ -176,3 +176,39 @@
 /processorParam:TextureFormat=DxtCompressed
 /build:GroundModels/groundGrass.fbx
 
+#begin Sound\explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound\explosion.wav
+
+#begin Sound\cannonFire.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound\cannonFire.wav
+
+#begin Sound\enemyDeath.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound\enemyDeath.wav
+
+#begin Sound\siren.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound\siren.wav
+
+#begin Sound\towerScream.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound\towerScream.wav
+
+#begin Sound\backgroundMusic
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound\backgroundMusic
+

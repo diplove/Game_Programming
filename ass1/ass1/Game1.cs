@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Diagnostics;
 
@@ -20,6 +22,19 @@ namespace ass1 {
 
         private int timeMinutes;
         private int timeSeconds;
+
+        private bool towerHealthDanger;
+
+        //Sound effects
+        private SoundEffect turretDestroyedSound;
+        private SoundEffect cannonFire;
+        private SoundEffect enemyDeath;
+        private SoundEffect siren;
+        private SoundEffect towerScream;
+        //http://www.bensound.com/royalty-free-music/track/epic
+        private Song backgroundMusic;
+        private SoundEffectInstance sirenInstance;
+        private SoundEffectInstance backgroundMusicInstance;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -72,6 +87,19 @@ namespace ass1 {
 
             timeMinutes = 0;
             timeSeconds = 0;
+
+            towerHealthDanger = false;
+
+            turretDestroyedSound = Content.Load<SoundEffect>(@"Sound\explosion");
+            cannonFire = Content.Load<SoundEffect>(@"Sound\cannonFire");
+            enemyDeath = Content.Load<SoundEffect>(@"Sound\enemyDeath");
+            siren = Content.Load<SoundEffect>(@"Sound\siren");
+            towerScream = Content.Load<SoundEffect>(@"Sound\towerScream");
+            backgroundMusic = Content.Load<Song>(@"Sound\backgroundMusic");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(backgroundMusic);
+
+            sirenInstance = siren.CreateInstance();
 
             base.Initialize();
         }
@@ -158,7 +186,7 @@ namespace ass1 {
             prevMouseState = mouseState;
 
             //Random enemy creation every frame, 1 in 100 chance of spawing
-            if (rand.Next() % 200  < waveNumber) {
+            if (rand.Next() % 100  < waveNumber) {
                 worldModelManager.CreateEnemy();
             }
 
@@ -167,7 +195,7 @@ namespace ass1 {
                 waveNumber = timeMinutes + 1;
                 timeSeconds = gameTime.TotalGameTime.Seconds;
             }
-            
+
 
             base.Update(gameTime);
         }
@@ -216,7 +244,28 @@ namespace ass1 {
         /// <param name="rewardForKilled"></param>
         public void EnemyKilled(int rewardForKilled) {
             player.GiveMoney(rewardForKilled);
+            enemyDeath.Play();
             enemiesKilled++;
+        }
+
+        public void TurretDestroyed() {
+            turretDestroyedSound.Play();
+        }
+
+        public void CannonFire() {
+            cannonFire.Play();
+        }
+
+        public void TowerDangerHealth() {
+            if (!towerHealthDanger) {
+                sirenInstance.IsLooped = true;
+                sirenInstance.Play();
+                towerHealthDanger = true;
+            } 
+        }
+
+        public void TowerTakesDamage() {
+            towerScream.Play();
         }
 
     }

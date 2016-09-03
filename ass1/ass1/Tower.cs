@@ -65,11 +65,18 @@ namespace ass1
         /// </summary>
         public void DamageTower(int damage)
         {
+
+            game.TowerTakesDamage();
+
             if (health - damage <= 0 ) {
                 health = 0;
                 TowerDestroyed();
             } else {
                 health -= damage;
+            }
+
+            if (health <= 20) {
+                game.TowerDangerHealth();
             }
         }
 

@@ -19,7 +19,7 @@ namespace ass1 {
             this.tower = tower;
             this.health = 100;
             this.speed = 50.0f;
-            this.rewardForKilling = 5;
+            this.rewardForKilling = 2;
             this.damage = 10;
         }
 

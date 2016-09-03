@@ -50,7 +50,7 @@ namespace ass1 {
             models.Add(ground);
             selectionCube = new SelectionCube(Game.Content.Load<Model>(@"Models\selectionCube"), new Vector3(0, 0, 0));
             models.Add(selectionCube);
-            tower = new Tower(Game.Content.Load<Model>(@"Models\selectionCube"), new Vector3(0, 300, 0), game);
+            tower = new Tower(Game.Content.Load<Model>(@"Models\selectionCube"), new Vector3(0, Game1.WORLD_BOUNDS_HEIGHT/2 - 10, 0), game);
             models.Add(tower);
             CreateEnemy();
             base.LoadContent();
@@ -78,6 +78,7 @@ namespace ass1 {
                         toBeKilled.Add(enemy);
                         if (turret.health <= 0) {
                             turretsToBeDestroyed.Add(turret);
+                            game.TurretDestroyed();
                         }
                     }
                 }
@@ -196,6 +197,10 @@ namespace ass1 {
         /// <param name="position"></param>
         public void CreateWall(Vector3 position) {
             walls.models.Add(new Wall(game.Content.Load<Model>(@"Models\Buildings\wall"), position, 100));
+        }
+
+        public void CannonFire() {
+            game.CannonFire();
         }
         
     }
