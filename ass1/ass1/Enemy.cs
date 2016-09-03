@@ -45,5 +45,11 @@ namespace ass1 {
             health -= damage;
         }
 
+        ///<summary>
+        ///Return the speed of the enemy
+        ///</summary>
+        public float GetSpeed() {
+            return this.speed;
+        }
     }
 }

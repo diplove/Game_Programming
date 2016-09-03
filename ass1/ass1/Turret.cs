@@ -83,7 +83,7 @@ namespace ass1 {
             if (lastFired > fireRate * 1000.0f && worldModelManager.GetClosestEnemy(position) != null) {
                 if (worldModelManager.enemies.models.Count <= 0) {
                 } else {
-                    bullets.models.Add(new Bullet(bullet, this.position, worldModelManager.GetClosestEnemy(position)));
+                    bullets.models.Add(new Bullet(bullet, this.position, worldModelManager.GetClosestEnemy(position), worldModelManager.tower));
                     worldModelManager.CannonFire();
                     lastFired = 0;
                 }
