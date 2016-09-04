@@ -19,6 +19,11 @@ namespace ass1 {
         /// </summary>
         public List<BasicModel> models = new List<BasicModel>();
 
+        /// <summary>
+        /// Constructor method for the Model Manager
+        /// Supplies the game to the superclass DrawableGameComponent
+        /// </summary>
+        /// <param name="game"></param>
         public ModelManager(Game game) : base(game) {
 
         }
@@ -37,6 +42,9 @@ namespace ass1 {
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Override for the load content of the DrawableGameComponent
+        /// </summary>
         protected override void LoadContent() {
             
             base.LoadContent();

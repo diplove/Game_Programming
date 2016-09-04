@@ -80,14 +80,18 @@ namespace ass1
             }
         }
 
-        public Vector3 GetPosition() {
-            return this.position;
-        }
-
+        /// <summary>
+        /// Draws the tower health text to the screen
+        /// </summary>
+        /// <param name="spriteBatch">A reference to the sprite batch from the game</param>
+        /// <param name="font">The SpriteFont that will be used for the text</param>
         public void DrawText(SpriteBatch spriteBatch, SpriteFont font) {
             spriteBatch.DrawString(font, "Tower Health: " + this.health, new Vector2(game.SCREEN_WIDTH/2 - 60, 20), Color.Black);
         }
 
+        /// <summary>
+        /// Lets the game know when the tower has been destroyed
+        /// </summary>
         public void TowerDestroyed() {
             game.GameOver();
         }

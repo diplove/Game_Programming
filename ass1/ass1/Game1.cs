@@ -55,7 +55,9 @@ namespace ass1 {
 
         bool gameOver;
 
-
+        /// <summary>
+        /// Constructor method for the game
+        /// </summary>
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             //graphics.ToggleFullScreen();
@@ -211,9 +213,6 @@ namespace ass1 {
 
             spriteBatch.Begin();
 
-            
-
-
             //Player and Tower information on screen
             player.DrawText(spriteBatch, informationFont);
             worldModelManager.tower.DrawText(spriteBatch, informationFont);
@@ -266,6 +265,10 @@ namespace ass1 {
 
         public void TowerTakesDamage() {
             towerScream.Play();
+        }
+
+        public void InvalidTurretPlacement() {
+            player.GiveMoney(Turret.COST);
         }
 
     }

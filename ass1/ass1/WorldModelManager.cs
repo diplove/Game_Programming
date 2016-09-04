@@ -19,6 +19,7 @@ namespace ass1 {
         public Ground ground;
         public SelectionCube selectionCube;
         public Tower tower;
+        public Turret towerTurret;
 
         Game1 game;
 
@@ -27,7 +28,8 @@ namespace ass1 {
 
         //Separate model managers to maintain the dynamic objects in the world
         public ModelManager enemies;
-        public ModelManager turrets;
+        public ModelManager turretsToBeDrawn;
+        public ModelManager allTurrets;
         public ModelManager walls;
         Random rand = new Random();
 
@@ -39,11 +41,15 @@ namespace ass1 {
         public WorldModelManager(Game1 game) : base(game) {
             prevMouseState = Mouse.GetState();
             enemies = new ModelManager(game);
-            turrets = new ModelManager(game);
+            allTurrets = new ModelManager(game);
+            turretsToBeDrawn = new ModelManager(game);
             walls = new ModelManager(game);
             this.game = game;
         }
 
+        /// <summary>
+        /// Load the content for the global models in the scene
+        /// </summary>
         protected override void LoadContent() {
 
             ground = new Ground(Game.Content.Load<Model>(@"GroundModels\ground"), new Vector3(0, 0, 0));
@@ -52,12 +58,14 @@ namespace ass1 {
             models.Add(selectionCube);
             tower = new Tower(Game.Content.Load<Model>(@"Models\selectionCube"), new Vector3(0, Game1.WORLD_BOUNDS_HEIGHT/2 - 10, 0), game);
             models.Add(tower);
+            towerTurret = new Turret(Game.Content.Load<Model>(@"Models\Turrets\cannon"), tower.GetPosition(), Game.Content.Load<Model>(@"Models\Turrets\Bullets\cannonBall"), this);
+            allTurrets.models.Add(towerTurret);
             CreateEnemy();
             base.LoadContent();
         }
 
         /// <summary>
-        /// CHecks to see if any of the models held in this model manager experienced collisions
+        /// Checks to see if any of the models held in this model manager experienced collisions
         /// and takes appropriate action depending on the type of collision
         /// </summary>
         /// <param name="gameTime"></param>
@@ -72,7 +80,7 @@ namespace ass1 {
                     toBeKilled.Add(enemy);
                 }
 
-                foreach (Turret turret in turrets.models) {
+                foreach (Turret turret in turretsToBeDrawn.models) {
                     if (enemy.CollidesWith(turret.model, turret.GetWorldMatrix())) {
                         turret.DamageTurret(enemy.GetDamage());
                         toBeKilled.Add(enemy);
@@ -86,7 +94,7 @@ namespace ass1 {
             }
 
 
-            foreach (Turret turret in turrets.models) {
+            foreach (Turret turret in allTurrets.models) {
                 List<Bullet> bulletsToBeDestroyed = new List<Bullet>();
                 turret.Update(gameTime);
                 foreach (Bullet bullet in turret.bullets.models) {
@@ -125,7 +133,8 @@ namespace ass1 {
 
             //Destroy all turrets that need to be destroyed
             foreach (Turret turret in turretsToBeDestroyed) {
-                turrets.models.Remove(turret);
+                turretsToBeDrawn.models.Remove(turret);
+                allTurrets.models.Remove(turret);
             }
 
 
@@ -140,9 +149,10 @@ namespace ass1 {
         public override void Draw(GameTime gameTime) {
             base.Draw(gameTime);
             enemies.Draw(gameTime);
-            turrets.Draw(gameTime);
+            turretsToBeDrawn.Draw(gameTime);
+            towerTurret.bullets.Draw(gameTime);
             walls.Draw(gameTime);
-            foreach (Turret turret in turrets.models) {
+            foreach (Turret turret in allTurrets.models) {
                 turret.bullets.Draw(gameTime);
             }
         }
@@ -164,7 +174,14 @@ namespace ass1 {
         public void CreateTurret(Vector3 position) {
             Turret turret = new Turret(game.Content.Load<Model>(@"Models\Turrets\cannon"), position, 
                 game.Content.Load<Model>(@"Models\Turrets\Bullets\cannonBall"), this);
-            turrets.models.Add(turret);
+            foreach (Turret otherTurret in allTurrets.models) {
+                if (otherTurret.CollidesWith(turret.model, turret.GetWorldMatrix())) {
+                    game.InvalidTurretPlacement();
+                    return;
+                }
+            }
+            turretsToBeDrawn.models.Add(turret);
+            allTurrets.models.Add(turret);
         }
 
         /// <summary>
@@ -199,6 +216,9 @@ namespace ass1 {
             walls.models.Add(new Wall(game.Content.Load<Model>(@"Models\Buildings\wall"), position, 100));
         }
 
+        /// <summary>
+        /// Let the game know that the cannon has been fired
+        /// </summary>
         public void CannonFire() {
             game.CannonFire();
         }

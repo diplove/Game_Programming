@@ -20,46 +20,51 @@ namespace ass1 {
         Enemy targetEnemy;
         Tower tower; // new added
 
-        public Bullet(Model m, Vector3 position, Enemy targetEnemy, Tower tower) : base(m, position) {
+        public Bullet(Model m, Vector3 position, Enemy targetEnemy, Tower tower, GameTime gameTime) : base(m, position) {
             this.targetEnemy = targetEnemy;
-            this.speed = 80.0f;
+            this.speed = 150.0f;
             damage = 100;
             this.tower = tower;
-            //CreateDirectionOfTravel(); // committed by sushmita
+            CreateDirectionOfTravel(); // committed by sushmita
         }
 
-        //private void CreateDirectionOfTravel() {
-        //    directionOfTravel = Vector3.Normalize(targetEnemy.GetPosition() - position);
-        //}
+        
+        private void CreateDirectionOfTravel() {
+            directionOfTravel = Vector3.Normalize(targetEnemy.GetPosition() - position);
+        } 
 
-        //public override void Update(GameTime gameTime) {
-        //    this.position += directionOfTravel * speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
-        //    base.Update(gameTime);
-        //}
+        public override void Update(GameTime gameTime) {
+            this.position += directionOfTravel * speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
+            base.Update(gameTime);
+        }
 
         ///<summary>
         ///Return the estimated current position of the enemy
         ///</summary>
         private Vector3 EstimateCurrentPosition(GameTime gameTime)
         {
-            Vector3 currentPosition = targetEnemy.GetPosition();
-            Vector3 targetPosition = tower.GetPosition();
+            Vector3 enemyCurrentPosition = targetEnemy.GetPosition();
+            Vector3 enemyTargetPosition = tower.GetPosition();
             //float distance = Vector3.Distance(currentPosition, targetPosition);
-            Vector3 direction = Vector3.Normalize(currentPosition - targetPosition);
+            Vector3 direction = Vector3.Normalize(enemyTargetPosition - enemyCurrentPosition);
             Vector3 updatedPosition = direction * targetEnemy.GetSpeed() * gameTime.ElapsedGameTime.Milliseconds / 1000;
             return updatedPosition;
         }
 
+        /*
         private void CreateDirectionOfTravel(GameTime gameTime)
         {
             directionOfTravel = Vector3.Normalize(EstimateCurrentPosition(gameTime) - position);
-        }
+        } */
+        
 
+        /*
         public override void Update(GameTime gameTime)
         {
-            CreateDirectionOfTravel(gameTime);
+            //CreateDirectionOfTravel(gameTime);
             this.position += directionOfTravel * speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
             base.Update(gameTime);
-        }
+        } */
+        
     }
 }

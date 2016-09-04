@@ -27,6 +27,10 @@ namespace ass1 {
             groundPlane = new Plane(Vector3.UnitY, position.Y);
         }
 
+        /// <summary>
+        /// Overrides the getter method for the world matrix of the ground
+        /// </summary>
+        /// <returns></returns>
         public override Matrix GetWorldMatrix() {
             Matrix world;
             world = base.GetWorldMatrix();

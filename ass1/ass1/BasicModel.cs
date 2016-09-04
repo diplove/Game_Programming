@@ -68,6 +68,12 @@ namespace ass1 {
             return world;
         }
 
+        /// <summary>
+        /// Determines whether or not this object is colliding with the given model and that models world matrix
+        /// </summary>
+        /// <param name="otherModel"></param>
+        /// <param name="otherWorld"></param>
+        /// <returns></returns>
         public bool CollidesWith(Model otherModel, Matrix otherWorld) {
             //Loop through each model meash in both objects and compare all the bounding spheres
             //for collisions
@@ -81,10 +87,14 @@ namespace ass1 {
             return false;
         }
 
-        // O is your object's position
-        // P is the position of the object to face
-        // U is the nominal "up" vector (typically Vector3.Y)
-        // Note: this does not work when O is straight below or straight above P
+        /// <summary>
+        /// Creates a quaternion to face the direction of another position in the world
+        /// Is a static method so both the objects position and the target position must be provided
+        /// </summary>
+        /// <param name="objectPosition">The current position of the model</param>
+        /// <param name="targetPosition">The position that the object would like to face</param>
+        /// <param name="up">The up vector of the object that you are hoping to rotate</param>
+        /// <returns>A Quaternion of the direction that is needed to face the position</returns>
         public static Quaternion RotateToFace(Vector3 objectPosition, Vector3 targetPosition, Vector3 up) {
             Vector3 direction = (objectPosition - targetPosition);
             Vector3 relativeRight = Vector3.Cross(up, direction);
@@ -98,6 +108,10 @@ namespace ass1 {
             return rotation;
         }
 
+        /// <summary>
+        /// Getter method to return the position of the current model
+        /// </summary>
+        /// <returns></returns>
         public Vector3 GetPosition() {
             return this.position;
         }
