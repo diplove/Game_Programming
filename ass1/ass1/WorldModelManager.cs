@@ -172,6 +172,10 @@ namespace ass1 {
         /// </summary>
         /// <param name="position"></param>
         public void CreateTurret(Vector3 position) {
+            if (position.X > Game1.WORLD_BOUNDS_WIDTH/2 || position.X < -Game1.WORLD_BOUNDS_WIDTH/2 || position.Y > Game1.WORLD_BOUNDS_HEIGHT/2 || position.Y < -Game1.WORLD_BOUNDS_HEIGHT/2) {
+                game.InvalidTurretPlacement();
+                return;
+            }
             Turret turret = new Turret(game.Content.Load<Model>(@"Models\Turrets\cannon"), position, 
                 game.Content.Load<Model>(@"Models\Turrets\Bullets\cannonBall"), this);
             foreach (Turret otherTurret in allTurrets.models) {
